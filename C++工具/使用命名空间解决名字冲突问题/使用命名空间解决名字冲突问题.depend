@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1455886575 source:d:\学习\codeblocks\c++\c++工具\使用命名空间解决名字冲突问题\main.cpp
+	<iostream>
+	"header1.h"
+	"header2.h"
+
+1455619795 d:\学习\codeblocks\c++\c++工具\使用命名空间解决名字冲突问题\header1.h
+	<string>
+	<math.h>
+
+1455619795 d:\学习\codeblocks\c++\c++工具\使用命名空间解决名字冲突问题\header2.h
+	<string>
+	<math.h>
+
