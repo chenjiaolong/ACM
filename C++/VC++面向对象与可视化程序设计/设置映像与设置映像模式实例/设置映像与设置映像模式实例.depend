@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1487670645 source:e:\学习\codeblocks\c++\vc++面向对象与可视化程序设计\设置映像与设置映像模式实例\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+

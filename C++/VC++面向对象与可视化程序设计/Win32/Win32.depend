@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1385316878 source:c:\users\leon lee\desktop\win32\main.cpp
+	<tchar.h>
+	<windows.h>
+
+1385316878 source:e:\学习\codeblocks\c++\vc++面向对象与可视化程序设计\win32\main.cpp
+	<tchar.h>
+	<windows.h>
+

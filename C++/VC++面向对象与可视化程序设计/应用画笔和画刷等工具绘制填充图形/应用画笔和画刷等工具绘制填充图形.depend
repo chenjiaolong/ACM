@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1487413483 source:e:\学习\codeblocks\c++\vc++面向对象与可视化程序设计\应用画笔和画刷等工具绘制填充图形\main.cpp
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+

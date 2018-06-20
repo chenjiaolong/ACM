@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1477302423 source:d:\学习\codeblocks\c++\随机数库\main.cpp
+	<iostream>
+	"zyrandom.h"
+
+1479173897 d:\学习\codeblocks\c++\随机数库\zyrandom.h
+
+1500266449 source:d:\学习\codeblocks\c++\随机数库\zyrandom.cpp
+	<time.h>
+	<stdlib.h>
+	<iostream>
+

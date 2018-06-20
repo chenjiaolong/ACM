@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1487658854 source:e:\学习\codeblocks\c++\vc++面向对象与可视化程序设计\动画\main.cpp
+	<math.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+

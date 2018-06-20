@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1477302602 source:d:\学习\codeblocks\c++\随机数库\zyrandom.cpp
+	<time.h>
+	<stdlib.h>
+	<iostream>
+
+1477307405 source:d:\学习\codeblocks\c++\猜数游戏\guess.cpp
+	<iostream>
+	<iomanip>
+	"zyrandom.h"
+	"guess.h"
+
+1477307569 d:\学习\codeblocks\c++\猜数游戏\zyrandom.h
+
+1477307215 d:\学习\codeblocks\c++\猜数游戏\guess.h
+
+1477307213 source:d:\学习\codeblocks\c++\猜数游戏\main.cpp
+	"guess.h"
+
+1477307585 source:d:\学习\codeblocks\c++\猜数游戏\zyrandom.cpp
+	<time.h>
+	<stdlib.h>
+	<iostream>
+
+1477307405 source:e:\学习\codeblocks\c++\猜数游戏\guess.cpp
+	<iostream>
+	<iomanip>
+	"zyrandom.h"
+	"guess.h"
+
+1477307569 e:\学习\codeblocks\c++\猜数游戏\zyrandom.h
+
+1477307215 e:\学习\codeblocks\c++\猜数游戏\guess.h
+
+1477307213 source:e:\学习\codeblocks\c++\猜数游戏\main.cpp
+	"guess.h"
+
+1477307585 source:e:\学习\codeblocks\c++\猜数游戏\zyrandom.cpp
+	<time.h>
+	<stdlib.h>
+	<iostream>
+

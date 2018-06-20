@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1453112343 source:d:\学习\codeblocks\c++\student\main.cpp
+	<iostream>
+	"student.h"
+
+1453112378 d:\学习\codeblocks\c++\student\student.h
+	<string>
+
+1453112470 source:d:\学习\codeblocks\c++\student\student.cpp
+	<iostream>
+	"student.h"
+
+1453112343 source:d:\学习\codeblocks\c++\示例\student\main.cpp
+	<iostream>
+	"student.h"
+
+1453112378 d:\学习\codeblocks\c++\示例\student\student.h
+	<string>
+
+1455620200 source:d:\学习\codeblocks\c++\示例\student\student.cpp
+	<iostream>
+	"student.h"
+
