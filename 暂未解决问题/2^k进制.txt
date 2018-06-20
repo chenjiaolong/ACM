@@ -1,0 +1,292 @@
+题目中的那个从另一角度分析就已经蕴含了这个题的基本思路。就以题目的例子为例，长度为7位的01字串按3位一段就这样分：0 000 000。其中除了首段，每段都小于(111)2，也即小于2^k，而首段自然是小于2^(w%k)（对于w%k为0时也成立）了。
+如果首段为0，则当这个2k进制数位数分别为2、3、...、[n/k]时，如果用b_max表示2k，对应的解的个数分别为C[b_max-1][2]、C[b_max-1][3]、...、C[b_max-1][n/k]（C[i][j]表示从i个数里选j个构成一组组合）。
+如果首段不为0，设首段为x，则解就有c[b_max-x-1][n/k]个。
+这样，求解的个数就搞定了，剩下的活就是高精了。求组合数可以用这个公
+式：C[n][m]=C[n-1][m-1]+C[n-1][m]，这样高精就只用加法了。
+#include <fstream>
+using namespace std;
+int c[512][512][100];
+void plus1(int*,int*,int*);
+void plus2(int*,int*);
+int main()
+{
+    ifstream fin ("digital.in");
+    ofstream fout ("digital.out");
+    int k,n,b_max,h_max,ans[201]= {0};
+    fin >> k >> n;
+    b_max=1<<k;
+    h_max=1<<(n%k);
+    c[0][0][0]=c[0][0][1]=1;
+    for (int i=1; i<b_max; i++)
+        for (int j=0; j<=i; j++)
+        {
+            if (j==0) c[i][j][0]=c[i][j][1]=1;
+            else plus1(c[i-1][j],c[i-1][j-1],c[i][j]);
+        }
+    for (int i=2; i<=n/k && i<b_max; i++) plus2(ans,c[b_max-1][i]);
+    for (int i=1; i<h_max && n/k+i<b_max; i++) plus2(ans,c[b_max-i-1][n/k]);
+    for (int i=ans[0]; i>=1; i--) fout << ans[i];
+    fout << endl;
+    fin.close();
+    fout.close();
+    return 0;
+}
+void plus1(int x[],int y[],int z[])
+{
+    z[0]=max(x[0],y[0]);
+    for (int i=1; i<=z[0]; i++)
+    {
+        z[i]+=x[i]+y[i];
+        z[i+1]+=z[i]/10;
+        z[i]%=10;
+    }
+    if (z[z[0]+1]!=0)
+        z[0]++;
+}
+void plus2(int x[],int y[])
+{
+    x[0]=max(x[0],y[0]);
+    for (int i=1; i<=x[0]; i++)
+    {
+        x[i]+=y[i];
+        x[i+1]+=x[i]/10;
+        x[i]%=10;
+    }
+    if (x[x[0]+1]!=0)
+        x[0]++;
+}
+
+思路就是递推（也就是动态规划）根据一个公式推导出来的DP方程，首先我用f[i][j]表示第i位数以j开头的数字共有多少个，那么最容易得到的一个转移方程是：
+　　f[i][j] = f[i - 1][j + 1] + f[i - 1][j + 2] + ....... + f[i - 1][n - 1] + f[i - 1][n].
+　　但是这个方程给我们的感觉就是一个字——太慢了，为什么这么慢呢？因为它就是这么慢，要把所有的一个个相加一次，但是注意到上面我画红的部分！就是用这个公式，这部分能够表示成啥？很简单啊：
+　　f[i][j + 1] = f[i - 1][j + 2] + ....... + f[i - 1][n - 1] + f[i - 1][n].
+　　那么智商高一点的人就看到玄机了，能够把f[i][j]简化成如下的形式：
+　　f[i][j] = f[i][j + 1] + f[i - 1][j + 1]
+　　如此一来程序就清晰多了，代码也很好写，要注意的是搜索时j是从后向前搜索，我还是使用面向对象的思想，先封装了一套int类型的，然后再修改成高精度类型的，int类型的（40分）如下：
+
+#include <stdio.h>
+typedef int num;
+num f[61][513];
+num ans;
+
+void give(num *a, int b)
+{
+        *a = b;
+}
+
+void add(num *a, num *b)
+{
+        *a += *b;
+}
+
+void output(num *a)
+{
+        printf("%d", *a);
+}
+
+int main(void)
+{
+        int i, j;
+        int n, s, k, t, l;
+        scanf("%d%d", &s, &n);
+        k = 1 << s;
+        for(i = 0; i < k; i++){
+                give(&f[0][i], 1);
+        }
+        t = n / s;
+        for(i = 1; i <= t; i++){
+                for(j = k - i - 1; j >= 1; j--){
+                        add(&f[i][j], &f[i][j + 1]);
+                        add(&f[i][j], &f[i - 1][j + 1]);
+                }
+        }
+        for(i = 1; i < t; i++){
+                for(j = k - i - 1; j >= 1; j--){
+                        add(&ans, &f[i][j]);
+                }
+        }
+        l = n - t * s;
+        if(l == 0){
+                l = k;
+        }else{
+                l = 1 << l;
+        }
+        for(i = 1; i < l; i++){
+                add(&ans, &f[t][i]);
+        }
+        output(&ans);
+        printf("\n");
+        return 0;
+}
+　　详细修改了一番之后，发现主函数中错了，后来详细修改了一番，弄得我以为高精度写错了，仔细检查之后发现两个地方错了，第一个是数组开小了，本来是num f[61][513]，后来发现要使用f[513][513]，再一个就是不能够直接使用用(n - 1)/s，因为如果用30000/1（k = 1, w = 30000）的话那数组又会显得小了，需要f[30000][513]，但是实际上又跟本用不到（因为k很小时最多只有!((1 << k) - 1)种情况，那样的情况很少）。
+　　所以最终修改了一大番，确定了AC代码：
+#include <math.h>
+#include <stdio.h>
+#define max(a, b) ((a)>(b)?(a):(b))
+#define used 100000000
+#define bits ((int)log10(used))
+#define MAX 26
+typedef struct{
+        int num[MAX];
+        int len;
+}num;
+num f[513][513];
+//数组开小了 
+num ans;
+
+void give(num *a, int b)
+{
+        int i;
+        for(i = 0; b != 0; i++){
+                a->num[i] = b % used;
+                b /= used;
+        }
+        a->len = i;
+}
+
+void add(num *a, num *b)
+{
+        int i;
+        int len = max(a->len, b->len);
+        int re = 0;
+        for(i = 0; i < len; i++){
+                a->num[i] += b->num[i] + re;
+                re = a->num[i] / used;
+                a->num[i] %= used;
+        }
+        if(re > 0){
+                a->num[i] = re;
+                len++;
+        }
+        a->len = len;
+}
+
+void output(num *a)
+{
+        int i;
+        int len = a->len, *num = a->num;
+        printf("%d", num[len - 1]);
+        len--;
+        for(i = len - 1; i >= 0; i--){
+                printf("%.*d", bits, num[i]);
+        }
+}
+
+int main(void)
+{
+        int i, j;
+        int n, s, k, t, l;
+        scanf("%d%d", &s, &n);
+        k = 1 << s;
+        t = (n - 1) / s + 1;
+        if(t > k){                     //一直没写这个~!! 所以可能会出现各种想象不到的情况, 如:t = 3000
+                t = k;
+        }
+        for(i = 0; i < k; i++){
+                give(&f[0][i], 1);
+        }
+        for(i = 1; i < t; i++){
+                for(j = k - i - 1; j >= 1; j--){
+                        add(&f[i][j], &f[i][j + 1]);
+                        add(&f[i][j], &f[i - 1][j + 1]);
+                }
+        }
+        for(i = 1; i < t; i++){
+                for(j = k - i - 1; j >= 1; j--){
+                        add(&ans, &f[i][j]);
+                }
+        }
+        l = n % s;
+        if(l == 0){
+                l = k;
+        }else{
+                l = 1 << l;
+        }
+        for(i = 1; i < l; i++){
+                add(&ans, &f[t - 1][i]);
+        }
+        output(&ans);
+        printf("\n");
+        return 0;
+}
+
+#include <cstdio>
+#include <algorithm>
+#include <iostream>
+#include <cstring>
+using namespace std;
+const int M = 100000000;
+int k, w;
+int m, n, s;
+//又一坨高精，因为只涉及加法，所以用int压8位
+struct highNum
+{
+    int num[27];
+    highNum(int length = 1)
+    {
+        memset(num, 0, sizeof(num));
+        num[0] = length;
+    }
+    highNum operator = (int b)
+    {
+        memset(num, 0, sizeof(num));
+        num[0] = 1; num[1] = b;
+        int ret = num[1] / M, iter = 1;;
+        while(ret != 0)
+        {
+            num[iter] %= M;
+            num[++iter] += ret;
+            ret = num[iter] / M;
+        }
+        while(num[num[0] + 1] != 0) ++num[0];
+        return *this;
+    }
+    highNum operator + (highNum& b) const
+    {
+        highNum c = highNum(max(num[0], b.num[0]));
+        for(int i = 1; i <= c.num[0]; ++i)
+        {
+            c.num[i] += num[i] + b.num[i];
+            c.num[i + 1] += c.num[i] / M;
+            c.num[i] %= M;
+        }
+        while(c.num[c.num[0] + 1] != 0) ++c.num[0];
+        return c;
+    }
+};
+ostream& operator << (ostream& o, highNum& b)
+{
+    o << b.num[b.num[0]];
+    o.setf(ios::fixed);
+    for(int i = b.num[0] - 1; i >= 1; --i)
+    {
+        o.width(8);      //这些东西一定要紧跟在输出之前
+        o.fill(‘0‘);
+        o << b.num[i];
+    }
+    return o;
+}
+highNum ans, f[600][514];
+//按题意，当w=30000而k=2时，f[a][514]中的a要很大，但数据要求a不超过600（不要问我是怎么知道的）
+void init()
+{
+    cin >> k >> w;
+    s = (w + k) / k;
+    m = (1 << (w % k)) - 1;
+    n = (1 << k) - 1;
+}
+void work()
+{
+    for(int i = 1; i <= n; ++i) f[1][i] = i;
+    for(int i = 2; i <= s; ++i) for(int j = i; j <= n; ++j)
+        f[i][j] = f[i - 1][j - 1] + f[i][j - 1];
+    for(int i = 2; i < s; ++i) ans = ans + f[i][n];
+    for(int i = 1; i <= m; ++i) ans = ans + f[s - 1][n - i];
+    cout << ans;
+}
+int main()
+{
+    init();
+    work();
+    return 0;
+}

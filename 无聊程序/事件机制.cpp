@@ -1,0 +1,117 @@
+#include <functional>
+#include <future>
+#include <iostream>
+#include <map>
+#include <mutex>
+#include <queue>
+#include <string>
+#include <thread>
+#include <vector>
+class event_queue {
+  public:
+    using message = std::pair<std::string, void *>;
+    using callback = std::function<void(void *)>;
+    using event = std::string;
+    event_queue(const event_queue &) = delete;
+    event_queue &operator=(const event_queue &) = delete;
+
+  public:
+    event_queue() {
+        m_thread = std::thread{[=]() {
+            for (;;) {
+                // std::cout << "----------lock" << std::endl;
+                std::unique_lock<std::mutex> ulock(m_lock);
+                m_notify.wait(ulock,
+                              [=]() { return m_stop || !m_queue.empty(); });
+                if (m_stop)
+                    break;
+                auto t = std::move(m_queue.front());
+                m_queue.pop();
+                ulock.unlock();
+                // std::cout << "----------unlock " << std::endl;
+                for (const auto &work : m_listen) {
+                    if (work.first == t.first) {
+                        work.second(t.second);
+                    }
+                }
+            }
+        }};
+    }
+    ~event_queue() {
+        {
+            std::unique_lock<std::mutex> ulock(m_lock);
+            m_stop = true;
+        }
+        m_notify.notify_all();
+        m_thread.join();
+    }
+
+  private:
+    std::vector<std::pair<event, callback>> m_listen;
+    // std::multimap<event,callback>
+    std::queue<message> m_queue;
+    std::thread m_thread;
+    std::mutex m_lock;
+    std::condition_variable m_notify;
+    bool m_stop{false};
+
+  public:
+    void addEventListener(event name, callback func) {
+        m_listen.emplace_back(std::make_pair(name, func));
+    }
+    void addMessage(message &&msg) {
+        {
+            std::unique_lock<std::mutex> ulock(m_lock);
+            m_queue.push(std::forward<message>(msg));
+        }
+        m_notify.notify_one();
+    }
+};
+
+int main() {
+    event_queue listener;
+
+    listener.addEventListener(std::string("open"), [=](void *ptr) {
+        auto data = (int *)ptr;
+        std::cout << " in \"open callback\" : ";
+        std::cout << *data << std::endl;
+    });
+
+    listener.addEventListener(std::string("close"), [=](void *ptr) {
+        auto data = (int *)ptr;
+        std::cout << " in \"close callback 1\" : ";
+        std::cout << *data << std::endl;
+    });
+
+    listener.addEventListener(std::string("close"), [=](void *ptr) {
+        auto data = (int *)ptr;
+        std::cout << " in \"close callback 2\" : ";
+        std::cout << *data << std::endl;
+    });
+    int test;
+    int flag = 0;
+    while (std::cin >> test) {
+        switch (flag) {
+        case 0: {
+            listener.addMessage({"open", (void *)(&test)});
+        } break;
+        case 1: {
+            listener.addMessage({"close", (void *)(&test)});
+        } break;
+        case 2: {
+            listener.addMessage({"get", (void *)(&test)});
+        } break;
+        case 3: {
+            listener.addMessage({"open", (void *)(&test)});
+            listener.addMessage({"close", (void *)(&test)});
+        } break;
+        default: {
+            flag = -1;
+            // not message
+        };
+        }
+        flag++;
+    }
+    return 0;
+}
+
