@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1462600037 source:d:\学习\codeblocks\数学问题\计算几何模板\main.cpp
+	<iostream>
+	<stdio.h>
+	<math.h>
+	<stdlib.h>
+
