@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1492836350 source:f:\功课\c++\code\多线程\多线程调试\main.cpp
+	<thread>
+	<cstdlib>
+	<iostream>
+	<windows.h>
+
