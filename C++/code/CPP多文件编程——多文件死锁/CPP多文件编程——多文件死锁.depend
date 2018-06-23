@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1505879950 source:e:\功课\c++\尹成\code\cpp多文件编程——多文件死锁\main.cpp
+	"Aclass.h"
+	"Bclass.h"
+	<iostream>
+
+1510298572 e:\功课\c++\尹成\code\cpp多文件编程——多文件死锁\include\aclass.h
+	"Bclass.h"
+	<iostream>
+
+1510298506 e:\功课\c++\尹成\code\cpp多文件编程——多文件死锁\include\bclass.h
+	"Aclass.h"
+	<iostream>
+
+1505879208 source:e:\功课\c++\尹成\code\cpp多文件编程——多文件死锁\src\aclass.cpp
+	"Aclass.h"
+
+1505879205 source:e:\功课\c++\尹成\code\cpp多文件编程——多文件死锁\src\bclass.cpp
+	"Bclass.h"
+
