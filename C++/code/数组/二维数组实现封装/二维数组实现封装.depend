@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1495361758 source:f:\功课\c++\尹成\code\二维数组实现封装\main.cpp
+	<iostream>
+	"myArray.h"
+
+1495361307 f:\功课\c++\尹成\code\二维数组实现封装\myarray.h
+	<iostream>
+	<initializer_list>
+
+1495361737 source:f:\功课\c++\尹成\code\二维数组实现封装\myarray.cpp
+	"myArray.h"
+
+1495361758 source:e:\功课\c++\尹成\code\数组\二维数组实现封装\main.cpp
+	<iostream>
+	"myArray.h"
+
+1495361307 e:\功课\c++\尹成\code\数组\二维数组实现封装\myarray.h
+	<iostream>
+	<initializer_list>
+
+1524573654 source:e:\功课\c++\尹成\code\数组\二维数组实现封装\myarray.cpp
+	"myArray.h"
+	<stdio.h>
+

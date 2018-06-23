@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1495360349 source:f:\功课\c++\尹成\code\数组实现封装\main.cpp
+	<iostream>
+	"myarray.h"
+
+1495360434 f:\功课\c++\尹成\code\数组实现封装\myarray.h
+	<iostream>
+	<initializer_list>
+
+1495360118 source:f:\功课\c++\尹成\code\数组实现封装\myarray.cpp
+	"myarray.h"
+
+1524573085 source:e:\功课\c++\尹成\code\数组\数组实现封装\main.cpp
+	<iostream>
+	"myarray.h"
+
+1495360434 e:\功课\c++\尹成\code\数组\数组实现封装\myarray.h
+	<iostream>
+	<initializer_list>
+
+1495360403 source:e:\功课\c++\尹成\code\数组\数组实现封装\myarray.cpp
+	"myarray.h"
+
