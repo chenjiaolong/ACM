@@ -1,0 +1,30 @@
+﻿面向过程：数据与操作是分离，数据被意外修改
+
+面向对象：实现了权限，无法被外部任意修改
+数据与函数的封装，实现权限管理
+模板实现了泛型思想
+
+
+nullptr 不是指针类型，自定义的一个类型表示空指针
+auto i = nullptr; // OK
+auto *p = nullptr; // Error  不是C风格的指针
+
+// OK
+int a = 5;
+auto *p = &a; // &a <==> int *
+auto &ra = a; 
+
+auto x = new auto(x); // x 是指针
+cout << typeid(x).name() << endl; // int *
+
+auto a = 1, b = 2.0; // Error 在声明符列表中，“auto”必须始终推导为统一类型 ， int 与 int *是统一类型
+
+auto o = 1, &p = o, *q = &p; // 推导，从左向右
+
+auto f[5]{1, 2, 3, 4, 5}; // Error auto 不包含数组
+auto *p = new int[5]{1, 2, 3, 4, 5}; // OK 是一个指针，指向一个数组
+
+
+函数重载：参数个数不一样，类型不一样，顺序不一样，与返回值无关
+
+
