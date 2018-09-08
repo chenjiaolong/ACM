@@ -34,7 +34,7 @@
 //    return 0;
 //}
 
-// Dijstra
+// Dijkstra
 //#include <bits/stdc++.h>
 //
 //using namespace std;
@@ -46,7 +46,7 @@
 //int dis[maxn];
 //bool vis[maxn];
 //
-//void Dijstra(int s)
+//void Dijkstra(int s)
 //{
 //    for(int i = 1; i <= n; i ++)
 //    {
@@ -108,7 +108,7 @@ struct node
     int u, v, w;
 } G[maxm];
 
-bool Bellman_ford(int s)
+bool Bellman_Ford(int s)
 {
     for(int i = 1; i <= n; i ++)
         dis[i] = inf;
@@ -142,7 +142,7 @@ int main()
             G[i + 1].v = G[i].u;
             G[i + 1].w = G[i].w;
         }
-        bool flag = Bellman_ford(1);
+        bool flag = Bellman_Ford(1);
         if(!flag) puts("-1");
         else
             for(int i = 1; i <= n; i ++)
