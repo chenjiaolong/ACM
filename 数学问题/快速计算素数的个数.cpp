@@ -1,4 +1,4 @@
-// N表示要计算的 n 开根号
+// N琛ㄧず瑕佽绠楃殑 n 寮�鏍瑰彿
 #include<stdio.h>
 #include<tr1/unordered_map>
 using namespace std :: tr1;
