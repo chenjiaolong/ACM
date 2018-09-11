@@ -21,7 +21,7 @@ void calc(int l1, int r1, int l2, int r2)
     calc(l1 + 1 + (i - l2) + 1, r1, i + 1, r2 - 1);
 }
 
-string Mult(string s, int x)  //´óÊı³ËÒÔÕûĞÎÊı
+string Mult(string s, int x)  //å¤§æ•°ä¹˜ä»¥æ•´å½¢æ•°
 {
     reverse(s.begin(), s.end());
     int cmp = 0;
