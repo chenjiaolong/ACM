@@ -1,4 +1,4 @@
-// BZOJ1251 РтБРЦХЅбХЯ
+// BZOJ1251 еєЏе€—з»€з»“иЂ…
 // http://codevs.cn/problem/4655/
 #include <cstdio>
 #include <cstring>
