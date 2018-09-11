@@ -157,7 +157,7 @@
 //            if(!maxf) break;
 //        }
 //    }
-//    if(!maxf) level[u] = 0;// »¡ÓÅ»¯
+//    if(!f) level[u] = 0;// »¡ÓÅ»¯
 //    return f;
 //}
 //int Dinic()
