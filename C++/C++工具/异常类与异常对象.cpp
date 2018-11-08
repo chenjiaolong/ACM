@@ -2,13 +2,13 @@
 
 using namespace std;
 
-// Òì³£Àà£º¿ÕÕ»Òì³£ÀàÓëÂúÕ»Òì³£Àà
-// ¾«ĞÄÉè¼ÆÒì³£Àà£¬Ìá¹©±ØÒªµÄÒì³£ĞÅÏ¢
+// å¼‚å¸¸ç±»ï¼šç©ºæ ˆå¼‚å¸¸ç±»ä¸æ»¡æ ˆå¼‚å¸¸ç±»
+// ç²¾å¿ƒè®¾è®¡å¼‚å¸¸ç±»ï¼Œæä¾›å¿…è¦çš„å¼‚å¸¸ä¿¡æ¯
 class EStackFull
 {
 public :
     EStackFull (int i) : _value(i) {  }
-    int GetValue() { return _value; }
+    int GetValue() const { return _value; }
 private :
     int _value;
 };
@@ -32,15 +32,15 @@ private :
 
 int JuStack :: Pop()
 {
-    if(IsEmpty()) // Òı·¢¿ÕÕ»Òì³££¬ ¹¹Ôì¸ÃÒì³£ÀàµÄÒ»¸ö¶ÔÏó²¢Å×³ö
+    if(IsEmpty()) // å¼•å‘ç©ºæ ˆå¼‚å¸¸ï¼Œ æ„é€ è¯¥å¼‚å¸¸ç±»çš„ä¸€ä¸ªå¯¹è±¡å¹¶æŠ›å‡º
         throw EStackEmpty();
     -- _top, -- _cnt;
     return _stk[_top];
 }
 void JuStack :: Push(int value)
 {
-    if(IsFull()) // Òı·¢ÂúÕ»Òì³££¬¹¹Ôì¸ÃÒì³£ÀàµÄÒ»¸ö¶ÔÏó²¢Å×³ö
-        throw EStackFull(value);// Ê¹ÓÃ value ¹¹ÔìÒì³£Àà¶ÔÏó²¢Å×³ö
+    if(IsFull()) // å¼•å‘æ»¡æ ˆå¼‚å¸¸ï¼Œæ„é€ è¯¥å¼‚å¸¸ç±»çš„ä¸€ä¸ªå¯¹è±¡å¹¶æŠ›å‡º
+        throw EStackFull(value);// ä½¿ç”¨ value æ„é€ å¼‚å¸¸ç±»å¯¹è±¡å¹¶æŠ›å‡º
     _stk[_top] = value;
     _top++, _cnt ++;
 }
@@ -53,8 +53,8 @@ int main()
     try
     {
         for(int i = 0; i < 32; i ++)
-            stack.Push(i); // ¿ÉÄÜÒı·¢Òì³£µÄº¯Êıµ÷ÓÃ
-    }catch(const EStackFull & e) // Ê¹ÓÃÒì³£¶ÔÏó»ñÈ¡ÏêÏ¸ĞÅÏ¢
+            stack.Push(i); // å¯èƒ½å¼•å‘å¼‚å¸¸çš„å‡½æ•°è°ƒç”¨
+    }catch(const EStackFull & e) // ä½¿ç”¨å¼‚å¸¸å¯¹è±¡è·å–è¯¦ç»†ä¿¡æ¯
     {
         cerr << "Stack full when trying to push" << e.GetValue() << endl;
         return err_stack_full;
